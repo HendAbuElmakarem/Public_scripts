@@ -21,14 +21,17 @@ alignments = AlignIO.parse(sys.argv[1],sys.argv[2])
 for alignment in alignments:
 	tot_len = alignment.get_alignment_length()
 	substitutions = alignment.substitutions
-AT = substitutions['A','T'] + substitutions['T','A']
-TC = substitutions['T','C'] + substitutions['C','T']
-AG = substitutions['A','G'] + substitutions['G','A']
-AC = substitutions['A','C'] + substitutions['C','A']
-TG = substitutions['T','G'] + substitutions['G','T']
-GC = substitutions['G','C'] + substitutions['C','G']
-GG = substitutions['G','G'] 
-CC = substitutions['C','C']
+	#To overcome the problem of missing nucleotides
+	all_sub = substitutions.select("ATCG")
+
+AT = all_sub['A','T'] + all_sub['T','A']
+TC = all_sub['T','C'] + all_sub['C','T']
+AG = all_sub['A','G'] + all_sub['G','A']
+AC = all_sub['A','C'] + all_sub['C','A']
+TG = all_sub['T','G'] + all_sub['G','T']
+GC = all_sub['G','C'] + all_sub['C','G']
+GG = all_sub['G','G'] 
+CC = all_sub['C','C']
 
 def nt_frequency(nt,length):
 	freq = (nt/length)
